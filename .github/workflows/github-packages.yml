@@ -1,0 +1,32 @@
+# Publishes a SCOPED mirror (@chulanpro5/underthesea-wasm) to GitHub Packages so
+# the repo's "Packages" sidebar is populated and the package links back to this
+# repo. The canonical package stays unscoped `underthesea-wasm` on npmjs.org
+# (published by publish.yml with provenance). GitHub Packages requires a scoped
+# name matching the owner and only needs the built-in GITHUB_TOKEN — no secret.
+name: Publish to GitHub Packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  github-packages:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@chulanpro5'
+      - run: npm install # runs `prepare`: fetches the model from the models-v1 Release + builds
+      - name: Scope the package name for GitHub Packages
+        run: npm pkg set name=@chulanpro5/underthesea-wasm
+      - run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

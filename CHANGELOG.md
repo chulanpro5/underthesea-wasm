@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1
+
+- No code changes. First release published from CI (GitHub Actions) with npm **provenance**.
+- Normalize `repository.url` to `git+https://…git` (removes an npm publish warning).
+
 ## 0.1.0
 
 Initial release.

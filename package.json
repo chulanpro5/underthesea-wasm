@@ -1,6 +1,6 @@
 {
   "name": "underthesea-wasm",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Vietnamese word segmentation in JS/TS — an unofficial in-process WebAssembly port of underthesea's word_tokenize. Exact parity, no Python.",
   "type": "module",
   "exports": {
@@ -50,7 +50,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/chulanpro5/underthesea-wasm"
+    "url": "git+https://github.com/chulanpro5/underthesea-wasm.git"
   },
   "sideEffects": false
 }

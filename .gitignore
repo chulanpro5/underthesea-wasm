@@ -13,3 +13,6 @@ wasm/*.wasm
 
 # npm pack output
 *.tgz
+
+# never commit auth tokens
+.npmrc

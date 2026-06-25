@@ -1,0 +1,36 @@
+name: Publish
+
+# Publishes to npm WITH PROVENANCE when a GitHub Release is published.
+#
+# One-time setup (required): create a repo secret named NPM_TOKEN holding an npm
+# Automation token (or a granular token with "publish" permission for this
+# package). Settings -> Secrets and variables -> Actions -> New repository secret.
+#
+# Provenance only attaches when the package is published from this trusted CI
+# workflow (id-token: write + `npm publish --provenance`). Publishing manually
+# from a laptop produces no provenance. The first version (0.1.0) was published
+# manually, so provenance starts from the next release cut via this workflow.
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+  id-token: write # required for npm provenance
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          registry-url: 'https://registry.npmjs.org'
+      # `npm install` runs the `prepare` script, which fetches the model + wasm
+      # from the models-v1 Release and builds — so the publish tarball bundles them.
+      - run: npm install
+      - run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -1,5 +1,7 @@
 # underthesea-wasm
 
+[![npm version](https://img.shields.io/npm/v/underthesea-wasm.svg)](https://www.npmjs.com/package/underthesea-wasm) [![npm downloads](https://img.shields.io/npm/dm/underthesea-wasm.svg)](https://www.npmjs.com/package/underthesea-wasm) [![license](https://img.shields.io/npm/l/underthesea-wasm.svg)](./LICENSE) [![CI](https://github.com/chulanpro5/underthesea-wasm/actions/workflows/ci.yml/badge.svg)](https://github.com/chulanpro5/underthesea-wasm/actions)
+
 Vietnamese **word segmentation** in JavaScript/TypeScript — an unofficial, in-process **WebAssembly** port of [underthesea](https://github.com/undertheseanlp/underthesea)'s `word_tokenize`. Same CRF model, **exact parity**, **no Python**, no native addon, no separate service. Runs in Node and Bun.
 
 ```ts
@@ -97,6 +99,18 @@ To **rebuild the WASM** from the Rust source, see [`crate/BUILD.md`](./crate/BUI
 
 - Word segmentation only (`word_tokenize`). POS tagging, NER, etc. are not ported.
 - Node ≥ 18 / Bun. The WASM bindings use the `nodejs` target (filesystem read of the model); a browser/bundler target isn't provided yet.
+
+## Releasing
+
+Publishing is automated by [`.github/workflows/publish.yml`](./.github/workflows/publish.yml), which runs on a published GitHub Release and publishes to npm **with provenance**.
+
+1. **One-time:** add an `NPM_TOKEN` repo secret (Settings → Secrets and variables → Actions) holding an npm **Automation** token, or a **granular** token with publish permission for this package.
+2. Bump `version` in [`package.json`](./package.json).
+3. Commit the bump.
+4. Create a GitHub Release for the matching tag, e.g. `gh release create v0.1.1 --generate-notes`.
+5. The publish workflow then runs `npm install` (which fetches the model via `prepare`) and `npm publish --provenance --access public`, attaching a verified provenance attestation.
+
+The first published version (`0.1.0`) was published manually and therefore has **no provenance**; provenance starts from the next release cut via this workflow.
 
 ## License & attribution
 

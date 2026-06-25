@@ -1,0 +1,22 @@
+{
+  "release": "models-v1",
+  "baseUrl": "https://github.com/chulanpro5/underthesea-wasm/releases/download/models-v1",
+  "note": "Override the host with the UNDERTHESEA_WASM_ASSETS_BASEURL env var. Each file is downloaded from `${baseUrl}/${basename(path)}` and verified against sha256.",
+  "files": [
+    {
+      "path": "model/models.bin",
+      "sha256": "c3a64c64349f1d73304f89babacaa8f8cd6078b1ec1a1b2c104e9e411ac1d2c3",
+      "bytes": 5265072
+    },
+    {
+      "path": "model/dictionary.json",
+      "sha256": "2b66302e478b4bfd2f1d18e0304d08ac71b4ce9910512d1d2520a8b5a18a9f4a",
+      "bytes": 1192818
+    },
+    {
+      "path": "wasm/vntok_wasm_bg.wasm",
+      "sha256": "b16b6e7be88189fc1a2dddfcecad8b8bb3f1bdd98b168ec8223f2e6d6972c413",
+      "bytes": 1160854
+    }
+  ]
+}

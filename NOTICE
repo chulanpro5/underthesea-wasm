@@ -1,0 +1,50 @@
+underthesea-wasm
+================
+
+This product is a derivative work of underthesea
+(https://github.com/undertheseanlp/underthesea). All credit for the word
+segmentation model and the original implementation goes to the underthesea
+authors. underthesea-wasm is NOT affiliated with or endorsed by underthesea.
+
+Scope of the derivative
+-----------------------
+Only underthesea's `word_tokenize` (Vietnamese word segmentation) is ported.
+The `agent` feature and all other NLP pipeline tasks are not included.
+
+Components and their upstream licenses
+--------------------------------------
+1. Regex pre-tokenizer and normalization
+   - Derived from: underthesea `pipeline/word_tokenize/regex_tokenize.py` and
+     `pipeline/text_normalize` (`token_normalize`, `character_normalize`).
+   - Upstream license: Apache-2.0 (main underthesea repository LICENSE + pyproject).
+   - Here: src/regex-tokenize.ts, src/character_map.json, src/token_map.json.
+
+2. CRF featurizer + tagger (inference)
+   - Derived from: `extensions/underthesea_core` (Rust).
+   - Upstream license: the crate's Cargo.toml declares "GPL-3.0" (note: that
+     crate's pyproject.toml instead declares Apache-2.0 — upstream is
+     inconsistent; there is no LICENSE file or per-file header in the crate).
+   - Here: crate/ (Rust source) and wasm/ (compiled WebAssembly).
+
+3. CRF model
+   - File: ws_crf_vlsp2013_20230727 (model/models.bin, model/features.json,
+     model/dictionary.json), trained on the VLSP 2013 corpus.
+   - Shipped in the Apache-2.0 main underthesea repository. Independent of this
+     code's license, review the VLSP 2013 data/model terms for your use case.
+
+Combined-work license
+----------------------
+Because the forked CRF code (component 2) is declared GPL-3.0 by its Cargo.toml,
+and because Apache-2.0 (components 1 and 3) is one-way compatible with GPL-3.0,
+the combined work is distributed under GPL-3.0-only. This is compliant whichever
+way upstream's underthesea_core license ambiguity is resolved.
+
+Modifications made
+------------------
+- Ported regex_tokenize + token/character normalize from Python to TypeScript
+  (src/regex-tokenize.ts), reproducing re.VERBOSE and re.UNICODE \w semantics.
+- Forked the underthesea_core inference subset to Rust/WASM (crate/): removed the
+  PyO3 bindings, the CRF trainer, and the rayon/SVM/TF-IDF modules; patched the
+  model loader to read from in-memory bytes instead of a file path.
+- Extracted the model's features.bin/dictionary.bin and the tn_rules character/
+  token maps from their joblib binaries into JSON.

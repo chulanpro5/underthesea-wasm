@@ -1,0 +1,56 @@
+{
+  "name": "underthesea-wasm",
+  "version": "0.1.0",
+  "description": "Vietnamese word segmentation in JS/TS — an unofficial in-process WebAssembly port of underthesea's word_tokenize. Exact parity, no Python.",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "src",
+    "wasm",
+    "model",
+    "crate",
+    "README.md",
+    "LICENSE",
+    "NOTICE"
+  ],
+  "scripts": {
+    "fetch:model": "node scripts/fetch-model.mjs",
+    "build": "tsc && cp src/character_map.json src/token_map.json dist/",
+    "test": "bun test",
+    "prepare": "node scripts/fetch-model.mjs && tsc && cp src/character_map.json src/token_map.json dist/"
+  },
+  "keywords": [
+    "vietnamese",
+    "nlp",
+    "word-segmentation",
+    "tokenizer",
+    "word-tokenize",
+    "underthesea",
+    "wasm",
+    "crf"
+  ],
+  "license": "GPL-3.0-only",
+  "author": "chulanpro5 <chulanpro5@gmail.com>",
+  "homepage": "https://github.com/chulanpro5/underthesea-wasm#readme",
+  "bugs": {
+    "url": "https://github.com/chulanpro5/underthesea-wasm/issues"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chulanpro5/underthesea-wasm"
+  },
+  "sideEffects": false
+}

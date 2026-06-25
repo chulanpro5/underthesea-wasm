@@ -1,0 +1,15 @@
+node_modules/
+dist/
+crate/target/
+crate/Cargo.lock
+*.log
+.DS_Store
+
+# Binary assets — hosted on a GitHub Release, fetched by scripts/fetch-model.mjs
+# (kept out of git; bundled into the npm tarball via the `prepare` script).
+model/models.bin
+model/dictionary.json
+wasm/*.wasm
+
+# npm pack output
+*.tgz

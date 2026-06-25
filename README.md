@@ -35,6 +35,8 @@ npm install underthesea-wasm
 
 The **git repo** keeps those binaries out of version control — they're hosted on a GitHub Release and fetched at build time (see *Building from source* below).
 
+> The canonical package is **`underthesea-wasm`** on npmjs.org (install it as shown above). A scoped mirror **`@chulanpro5/underthesea-wasm`** is also published to GitHub Packages for discoverability from the repo; prefer the npmjs package for normal use.
+
 ## API
 
 ```ts
